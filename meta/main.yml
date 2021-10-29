@@ -1,5 +1,8 @@
+---
 galaxy_info:
-  author: Matt DePorter
+  role_name: nfs_config
+  namespace: ansible
+  author: Matthew DePorter
   description: Role to configure NFS servers and clients
   company: Mobile-Tech LLC
 
