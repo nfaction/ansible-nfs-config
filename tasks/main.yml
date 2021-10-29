@@ -2,6 +2,13 @@
 
 - name: configure NFS server
   block:
+    - name: perform an apt update
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      when:
+        - ansible_os_family == 'Debian'
+
     - name: install nfs server
       package:
         name: '{{ item }}'
@@ -26,6 +33,13 @@
 
 - name: configure NFS client
   block:
+    - name: perform an apt update
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      when:
+        - ansible_os_family == 'Debian'
+
     - name: install nfs client tools
       package:
         name: '{{ item }}'
