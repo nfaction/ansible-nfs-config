@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: create temp share
+      file:
+        dest: /opt/home
+        state: directory
+
+  tasks:
+    - name: "Include ansible-nfs-config"
+      include_role:
+        name: "ansible-nfs-config"
+      vars:
+        configure_nfs_server: true
+        configure_nfs_client: true
+        

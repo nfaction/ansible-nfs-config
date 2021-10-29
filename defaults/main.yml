@@ -1,0 +1,54 @@
+---
+
+# Workarounds for running the playbook in this role
+ansible_root_dir: "{{ playbook_dir }}"
+ansible_root_dir_roles_path: "{{ ansible_root_dir }}/roles"
+
+##############
+# NFS Server #
+##############
+configure_nfs_server: false
+
+nfs_server_packages:
+  - nfs-common
+  - nfs-kernel-server
+
+exports_path: '/etc/exports'
+nfs_network: '127.0.0.0'
+nfs_subnet_mask: '255.255.255.0'
+nfs_share_options:
+  - 'rw'
+  - 'no_root_squash'
+  - 'subtree_check'
+
+nfs_shares:
+  - name: opt share
+    share: '/opt/home'
+    network: '{{ nfs_network }}'
+    sn_mask: '{{ nfs_subnet_mask }}'
+    share_options: '{{ nfs_share_options | join(",") }}'
+
+run_export_shares: true
+
+##############
+# NFS Client #
+##############
+configure_nfs_client: true
+
+nfs_client_packages:
+  - nfs-common
+
+# Mounts
+fstab_config: /etc/fstab
+
+create_nfs_mounts: true
+
+nfs_server_host: '127.0.0.1'
+
+nfs_client_mounts:
+  - name: opt home
+    host: '{{ nfs_server_host }}'
+    nfs_mount: '/opt/home'
+    mount: '/home-nfs'
+
+run_mount_all: true

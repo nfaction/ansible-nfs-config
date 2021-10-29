@@ -1,0 +1,67 @@
+---
+
+- name: configure NFS server
+  block:
+    - name: install nfs server
+      package:
+        name: '{{ item }}'
+        state: present
+      with_items:
+        - '{{ nfs_server_packages | default([]) }}'
+      tags:
+        - install
+
+    - name: template nfs exports
+      template:
+        src: nfs_etc_exports.j2
+        dest: '{{ exports_path | default([]) }}'
+      notify: enable and start nfs server
+
+    - name: export nfs shares
+      command: exportfs -a
+      changed_when: false
+      when: run_export_shares | bool
+
+  when: configure_nfs_server | bool
+
+- name: configure NFS client
+  block:
+    - name: install nfs client tools
+      package:
+        name: '{{ item }}'
+        state: present
+      with_items:
+        - '{{ nfs_client_packages | default([]) }}'
+      tags:
+        - install
+
+    - name: create nfs mount points
+      file:
+        path: '{{ item.mount }}'
+        state: directory
+      with_items:
+        - '{{ nfs_client_mounts }}'
+
+    - name: configure nfs mounts
+      lineinfile:
+        path: '{{ fstab_config }}'
+        line: '{{ item.host }}:{{ item.nfs_mount}} {{ item.mount }} nfs defaults 0 0'
+        state: present
+      with_items:
+        - '{{ nfs_client_mounts | default([]) }}'
+
+    - name: mount all shares
+      command: mount -a
+      changed_when: false
+      when: run_mount_all | bool
+
+  when: configure_nfs_client | bool
+
+# ansible-galaxy collection install ansible.posix
+# - name: Mount an NFS volume
+#   ansible.posix.mount:
+#     src: 192.168.1.100:/nfs/ssd/shared_data
+#     path: /mnt/shared_data
+#     opts: rw,sync,hard,intr
+#     state: mounted
+#     fstype: nfs

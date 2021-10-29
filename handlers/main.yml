@@ -1,0 +1,7 @@
+---
+
+- name: enable and start nfs server
+  systemd:
+    name: nfs-kernel-server
+    state: started
+    enabled: yes
