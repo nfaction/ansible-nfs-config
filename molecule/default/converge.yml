@@ -11,6 +11,10 @@
       file:
         path: /etc/fstab
         state: touch
+        owner: root
+        group: root
+        mode: 0644
+      changed_when: false
 
   tasks:
     - name: "Include ansible-nfs-config"
@@ -20,4 +24,5 @@
         configure_nfs_server: true
         configure_nfs_client: true
         run_mount_all: false
+        start_and_enable_service: false
         

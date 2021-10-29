@@ -25,6 +25,7 @@ nfs_shares:
     share_options: '{{ nfs_share_options | join(",") }}'
 
 run_export_shares: true
+start_and_enable_service: true
 
 ##############
 # NFS Client #

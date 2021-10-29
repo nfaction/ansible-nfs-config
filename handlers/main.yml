@@ -5,3 +5,4 @@
     name: '{{ nfs_service }}'
     state: started
     enabled: yes
+  when: start_and_enable_service | bool
