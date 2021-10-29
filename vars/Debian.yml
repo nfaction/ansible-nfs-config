@@ -6,3 +6,5 @@ nfs_server_packages:
 
 nfs_client_packages:
   - nfs-common
+
+nfs_service: nfs-kernel-server

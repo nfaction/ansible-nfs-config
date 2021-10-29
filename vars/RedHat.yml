@@ -5,3 +5,5 @@ nfs_server_packages:
 
 nfs_client_packages:
   - nfs-utils
+
+nfs_service: nfs-server
