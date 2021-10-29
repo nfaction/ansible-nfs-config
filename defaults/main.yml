@@ -9,10 +9,6 @@ ansible_root_dir_roles_path: "{{ ansible_root_dir }}/roles"
 ##############
 configure_nfs_server: false
 
-nfs_server_packages:
-  - nfs-common
-  - nfs-kernel-server
-
 exports_path: '/etc/exports'
 nfs_network: '127.0.0.0'
 nfs_subnet_mask: '255.255.255.0'
@@ -34,9 +30,6 @@ run_export_shares: true
 # NFS Client #
 ##############
 configure_nfs_client: true
-
-nfs_client_packages:
-  - nfs-common
 
 # Mounts
 fstab_config: /etc/fstab

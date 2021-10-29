@@ -2,6 +2,6 @@
 
 - name: enable and start nfs server
   systemd:
-    name: nfs-kernel-server
+    name: '{{ nfs_service }}'
     state: started
     enabled: yes

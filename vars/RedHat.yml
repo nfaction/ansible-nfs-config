@@ -1,0 +1,7 @@
+---
+
+nfs_server_packages:
+  - nfs-utils
+
+nfs_client_packages:
+  - nfs-utils

@@ -7,6 +7,11 @@
         dest: /opt/home
         state: directory
 
+    - name: create fstab in container
+      file:
+        path: /etc/fstab
+        state: touch
+
   tasks:
     - name: "Include ansible-nfs-config"
       include_role:
